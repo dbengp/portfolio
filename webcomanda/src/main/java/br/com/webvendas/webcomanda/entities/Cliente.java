@@ -1,8 +1,14 @@
 package br.com.webvendas.webcomanda.entities;
 
+import br.com.webvendas.webcomanda.entities.Pedido;
+
 import java.io.Serializable;
+import java.util.List;
+import java.util.ArrayList;
 
 import jakarta.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "tb_cliente")
@@ -17,7 +23,13 @@ public class Cliente implements Serializable{
 	private String email;
 	private String contato;
 	
-	public Cliente(){ }
+	@JsonIgnore
+	@OneToMany(mappedBy = "cliente")
+	private List<Pedido> pedidos = new ArrayList<>();
+	
+	public Cliente(){
+
+	}
 	
 	public Cliente( Long id,String nome,String email,String contato){
 		
@@ -55,8 +67,12 @@ public class Cliente implements Serializable{
 		return contato;
 	}
 	
-	public void setContato(String phone){
+	public void setContato(String contato){
 		this.contato = contato;
+	}
+
+	public List<Pedido> getPedidos(){
+		return pedidos;
 	}
 
 	@Override
