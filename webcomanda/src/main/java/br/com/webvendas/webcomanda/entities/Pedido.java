@@ -1,11 +1,13 @@
 package br.com.webvendas.webcomanda.entities;
 
 import br.com.webvendas.webcomanda.entities.Cliente;
-
+import br.com.webvendas.webcomanda.enums.EstadoDoPedido;
 import java.time.Instant;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import jakarta.persistence.*;
 
@@ -24,17 +26,23 @@ public class Pedido implements Serializable{
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
 	private Instant momentoDoPedido;
 
+	private Integer estadoDoPedido;
+
 	@ManyToOne
 	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
 	
+	@OneToMany(mappedBy = "chaveCompostaDeItemDoPedido.pedido")
+	private Set<ItemDoPedido> itens = new HashSet<>();
+	
 	public Pedido(){}
 	
-	public Pedido(Long id, Instant momentoDoPedido, Cliente cliente){
+	public Pedido(Long id, Instant momentoDoPedido, Cliente cliente, EstadoDoPedido estadoDoPedido){
 		
 		this.id = id;
 		this.momentoDoPedido = momentoDoPedido;
 		this.cliente = cliente;
+		setEstadoDoPedido(estadoDoPedido);
 	}
 
 	public Long getId() {
@@ -59,6 +67,19 @@ public class Pedido implements Serializable{
 
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
+	}
+	
+	public EstadoDoPedido getEstadoDoPedido() {
+		return EstadoDoPedido.valueOf(estadoDoPedido);
+	}
+
+	public void setEstadoDoPedido(EstadoDoPedido estadoDoPedido) {
+		if(estadoDoPedido != null)
+			this.estadoDoPedido = estadoDoPedido.getCode();
+	}
+	
+	public Set<ItemDoPedido>getItens(){
+		return itens;
 	}
 
 	@Override
