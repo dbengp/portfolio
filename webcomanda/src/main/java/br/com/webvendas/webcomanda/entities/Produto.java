@@ -52,15 +52,15 @@ public class Produto implements Serializable {
 		this.descricao = descricao;
 	}
 
-	public Double getPreco() {
-		return preco;
-	}
+    public Double getPreco() {
+        return preco;
+    }
 
-	public void setPreco(Double preco) {
-		this.preco = preco;
-	}
+    public void setPreco(Double preco) {
+        this.preco = preco;
+    }
 
-	@Override
+    @Override
 	public final boolean equals(Object o) {
 		if (this == o) return true;
 		if (!(o instanceof Produto produto)) return false;

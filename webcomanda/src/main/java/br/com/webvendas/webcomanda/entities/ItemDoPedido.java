@@ -18,17 +18,17 @@ public class ItemDoPedido implements Serializable {
 	private ChaveCompostaDeItemDoPedido chaveCompostaDeItemDoPedido =  new ChaveCompostaDeItemDoPedido();
 	
 	private Integer quantidade;
-	private Double preco;
+	private Boolean estaEmPromocao;
 	
 	public ItemDoPedido() {
 	}
 	
-	public ItemDoPedido(Pedido pedido, Produto produto,Integer quantidade, Double preco) {
+	public ItemDoPedido(Pedido pedido, Produto produto,Integer quantidade, Boolean estaEmPromocao) {
 		
 		chaveCompostaDeItemDoPedido.setPedido(pedido);
 		chaveCompostaDeItemDoPedido.setProduto(produto);
 		this.quantidade = quantidade;
-		this.preco = preco;
+		this.estaEmPromocao = estaEmPromocao;
 	}
 
 	@JsonIgnore
@@ -56,16 +56,16 @@ public class ItemDoPedido implements Serializable {
 		this.quantidade = quantidade;
 	}
 
-	public Double getPreco() {
-		return preco;
+	public Boolean getEstaEmPromocao() {
+		return estaEmPromocao;
 	}
 
-	public void setPreco(Double preco) {
-		this.preco = preco;
+	public void setEstaEmPromocao(Boolean estaEmPromocao) {
+		this.estaEmPromocao = estaEmPromocao;
 	}
 
 	public Double getSubTotal() {
-		return preco * quantidade;
+		return getProduto().getPreco() * quantidade;
 	}
 
 	@Override

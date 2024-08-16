@@ -1,12 +1,10 @@
 package br.com.webvendas.webcomanda.entities;
 
-import br.com.webvendas.webcomanda.entities.Cliente;
 import br.com.webvendas.webcomanda.enums.EstadoDoPedido;
 import java.time.Instant;
 
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 import jakarta.persistence.*;
@@ -34,6 +32,9 @@ public class Pedido implements Serializable{
 	
 	@OneToMany(mappedBy = "chaveCompostaDeItemDoPedido.pedido")
 	private Set<ItemDoPedido> itens = new HashSet<>();
+	
+	@OneToOne(mappedBy = "pedido", cascade = CascadeType.ALL)
+	private Pagamento pagamento;
 	
 	public Pedido(){}
 	
@@ -80,6 +81,22 @@ public class Pedido implements Serializable{
 	
 	public Set<ItemDoPedido>getItens(){
 		return itens;
+	}
+
+	public Pagamento getPagamento() {
+		return pagamento;
+	}
+
+	public void setPagamento(Pagamento pagamento) {
+		this.pagamento = pagamento;
+	}
+
+	public Double getTotalaPagar(){
+		double total = 0.0;
+		for (ItemDoPedido item : itens){
+			total += item.getSubTotal();
+		}
+		return total;
 	}
 
 	@Override

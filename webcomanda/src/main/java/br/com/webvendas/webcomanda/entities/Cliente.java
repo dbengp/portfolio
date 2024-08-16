@@ -1,14 +1,13 @@
 package br.com.webvendas.webcomanda.entities;
 
-import br.com.webvendas.webcomanda.entities.Pedido;
-
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
 import java.util.ArrayList;
-
-import jakarta.persistence.*;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "tb_cliente")
@@ -23,20 +22,32 @@ public class Cliente implements Serializable{
 	private String email;
 	private String contato;
 	
+	@OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL)
+	private Cashback cashback;
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "cliente")
 	private List<Pedido> pedidos = new ArrayList<>();
-	
-	public Cliente(){
 
-	}
+	@OneToMany(mappedBy = "cliente")
+	private Set<Pagamento> pagamentos = new HashSet<>();
 	
-	public Cliente( Long id,String nome,String email,String contato){
+	public Cliente(){}
+	
+	public Cliente(Long id,String nome,String email,String contato){
 		
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
 		this.contato = contato;
+	}
+	
+	public Cashback getCashback(){
+		return cashback;
+	}
+	
+	public void setCashback(Cashback cashback){
+		this.cashback = cashback;
 	}
 	
 	public Long getId(){
@@ -71,8 +82,12 @@ public class Cliente implements Serializable{
 		this.contato = contato;
 	}
 
-	public List<Pedido> getPedidos(){
-		return pedidos;
+	public void setPedidos(Pedido pedido){
+		pedidos.add(pedido);
+	}
+
+	public void setPagamentos(Pagamento pagamento){
+		pagamentos.add(pagamento);
 	}
 
 	@Override
@@ -87,4 +102,6 @@ public class Cliente implements Serializable{
 	public int hashCode() {
 		return getId().hashCode();
 	}
+
+
 }
