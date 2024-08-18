@@ -40,27 +40,32 @@ public class ClienteService {
 	}
 	
 	public Cliente update(Long id, Cliente cliente){
-		Cliente atualizado = clienteRepository.getReferenceById(id);
-		if(!Objects.equals(cliente.getNome(), null)){
-			if(!Objects.equals(cliente.getNome(), "" ))
-				atualizado.setNome(cliente.getNome());
+		
+		try{
+			Cliente atualizado = clienteRepository.getReferenceById(id);
+			if(!Objects.equals(cliente.getNome(), null)){
+				if(!Objects.equals(cliente.getNome(), "" ))
+					atualizado.setNome(cliente.getNome());
+			}
+			if(!Objects.equals(cliente.getEmail(), null)){
+				if(!Objects.equals(cliente.getEmail(), ""))
+					atualizado.setEmail(cliente.getEmail());
+			}
+			if(!Objects.equals(cliente.getContato(), null)){
+				if(!Objects.equals(cliente.getContato(), ""))
+					atualizado.setContato(cliente.getContato());
+			}
+			return clienteRepository.save(atualizado);
+		} catch(EntityNotFoundException e){
+			throw new ExcecaoDeBancoDeDados();
 		}
-		if(!Objects.equals(cliente.getEmail(), null)){
-			if(!Objects.equals(cliente.getEmail(), ""))
-				atualizado.setEmail(cliente.getEmail());
-		}
-		if(!Objects.equals(cliente.getContato(), null)){
-			if(!Objects.equals(cliente.getContato(), ""))
-				atualizado.setContato(cliente.getContato());
-		}
-		return clienteRepository.save(atualizado);
 	}
 	
 	public void delete (Long id){
 		
 		try{
 			clienteRepository.deleteById(id);
-		} catch (DataIntegrityViolationException e){
+		} catch (DataIntegrityViolationException e) {
 			throw new ExcecaoDeBancoDeDados();
 		}
 	}
