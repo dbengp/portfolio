@@ -57,7 +57,7 @@ public class ClienteService {
 			}
 			return clienteRepository.save(atualizado);
 		} catch(EntityNotFoundException e){
-			throw new ExcecaoDeBancoDeDados();
+			throw new ExcecaoDeRecursoNaoEncontrado();
 		}
 	}
 	
