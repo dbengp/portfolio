@@ -1,4 +1,4 @@
-package br.com.protejo.blog.mongoblog;
+package br.com.projeto.blog.mongoblog;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
