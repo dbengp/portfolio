@@ -18,6 +18,13 @@ public class Usuario implements Serializable {
 	public Usuario() {
 	}
 
+	public Usuario(String nome, String email, String perfil) {
+
+		this.nome = nome;
+		this.email = email;
+		this.perfil = perfil;
+	}
+
 	public Usuario(String id, String nome, String email, String perfil) {
 		this.id = id;
 		this.nome = nome;
