@@ -1,5 +1,6 @@
 package br.com.projeto.blog.mongoblog.resources;
 
+import br.com.projeto.blog.mongoblog.domain.Postagem;
 import br.com.projeto.blog.mongoblog.domain.Usuario;
 import br.com.projeto.blog.mongoblog.dtos.UsuarioDTO;
 import br.com.projeto.blog.mongoblog.dtos.UsuarioInsertDTO;
@@ -53,5 +54,12 @@ public class UsuarioResource {
 		
 		usuarioService.update(usuarioUpdateDto, id);
 		return ResponseEntity.noContent().build();
+	}
+
+	@GetMapping(value = "/{id}/postagens")
+	public ResponseEntity<List<Postagem>> findPostagens(@PathVariable String id){
+
+		Usuario usuario = usuarioService.findById(id);
+		return ResponseEntity.ok().body(usuario.getPostagens());
 	}
 } 

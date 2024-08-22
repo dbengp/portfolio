@@ -1,9 +1,12 @@
 package br.com.projeto.blog.mongoblog.domain;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Document(collection = "usuarios")
 public class Usuario implements Serializable {
@@ -15,6 +18,9 @@ public class Usuario implements Serializable {
 	private String email;
 	private String perfil;
 
+	@DBRef(lazy = true)
+	private List<Postagem> postagens = new ArrayList<>();
+
 	public Usuario() {
 	}
 
@@ -25,11 +31,12 @@ public class Usuario implements Serializable {
 		this.perfil = perfil;
 	}
 
-	public Usuario(String id, String nome, String email, String perfil) {
+	public Usuario(String id, String nome, String email, String perfil, List<Postagem> postagens) {
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
 		this.perfil = perfil;
+		setPostagens(postagens);
 	}
 
 	public String getId() {
@@ -62,6 +69,14 @@ public class Usuario implements Serializable {
 
 	public void setPerfil(String perfil) {
 		this.perfil = perfil;
+	}
+
+	public List<Postagem> getPostagens() {
+		return postagens;
+	}
+
+	public void setPostagens(List<Postagem> postagens) {
+		this.postagens = postagens;
 	}
 
 	@Override

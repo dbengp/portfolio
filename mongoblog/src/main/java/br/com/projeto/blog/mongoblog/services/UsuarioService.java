@@ -56,4 +56,5 @@ public class UsuarioService {
 		usuario.setPerfil(usuarioUpdateDto.getPerfil());
 		usuarioRepository.save(usuario);
 	}
+
 }
