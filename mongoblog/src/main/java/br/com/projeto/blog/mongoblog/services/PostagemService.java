@@ -6,6 +6,8 @@ import br.com.projeto.blog.mongoblog.repositories.PostagemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -22,6 +24,17 @@ public class PostagemService {
 		}catch (NoSuchElementException e) {
 			throw new ExcecaoDeDocumentoMongodbNaoEncontrado("Documento não encontrado no MongoDB");
 		}
+	}
+	
+	public List<Postagem> findByConteudoDaPostagemContainingIgnoreCase(String texto){
+			
+		return postagemRepository.findByConteudoDaPostagemContainingIgnoreCase(texto);
+	}	
+	
+	public List<Postagem> findByDataDaPostagemAfter(String dataLimite){
+		
+		Instant data = Instant.parse(dataLimite);
+		return postagemRepository.findByDataDaPostagemAfter(data);
 	}
 
 }
