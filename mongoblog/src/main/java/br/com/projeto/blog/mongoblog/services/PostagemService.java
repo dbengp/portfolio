@@ -36,5 +36,13 @@ public class PostagemService {
 		Instant data = Instant.parse(dataLimite);
 		return postagemRepository.findByDataDaPostagemAfter(data);
 	}
+	
+	public List<Postagem> findTextoEmPostagemEComentariosEntreDatasDaPostagem(String texto, String dataMinimaUtf8, String dataMaximaUtf8){
+	
+		Instant dataMinima = Instant.parse(dataMinimaUtf8);
+		Instant dataMaxima = Instant.parse(dataMaximaUtf8);
+		
+		return postagemRepository.findTextoEmPostagemEComentariosEntreDatasDaPostagem(texto, dataMinima, dataMaxima);
+	}
 
 }
